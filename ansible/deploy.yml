@@ -1,0 +1,7 @@
+---
+
+- hosts: webserver
+  vars_files:
+  - "vars/app.yml"
+  roles:
+    - { role: app-deploy, app: "{{app_conf}}" }

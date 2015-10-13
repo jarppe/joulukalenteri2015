@@ -1,0 +1,2 @@
+{:require [frontend.main]
+ :init-fns [frontend.main/init!]}

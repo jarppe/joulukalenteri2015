@@ -1,0 +1,5 @@
+users:
+  - name: jarppe
+    shell: /bin/zsh
+    keys:
+      - jarppe.pub

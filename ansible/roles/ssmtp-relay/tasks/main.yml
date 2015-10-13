@@ -1,0 +1,10 @@
+---
+
+- name: smtp | Install SSMTP
+  apt: name=ssmtp state=present
+
+- name: smtp | Install mailutils
+  apt: name=mailutils state=present
+
+- name: smtp | Copy config
+  template: src=ssmtp.conf.j2 dest=/etc/ssmtp/ssmtp.conf

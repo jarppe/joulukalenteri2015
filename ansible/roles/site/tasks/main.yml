@@ -1,0 +1,6 @@
+---
+
+- name: Site | Copy application nginx configs
+  template: src=site.conf.j2 dest=/etc/nginx/sites-enabled/{{name}}.conf
+  notify:
+    - reload nginx

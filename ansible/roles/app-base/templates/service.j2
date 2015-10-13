@@ -1,0 +1,15 @@
+[Unit]
+Description=Start {{app.name}} server
+After=syslog.target nginx.target
+
+[Service]
+User={{app.user}}
+Group={{app.user}}
+WorkingDirectory=/home/{{app.user}}
+ExecStart=/usr/bin/java -jar {{app.dst}} &
+KillMode=process
+StandardOutput=syslog
+StandardError=syslog
+
+[Install]
+WantedBy=multi-user.target

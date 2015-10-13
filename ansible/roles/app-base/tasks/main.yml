@@ -1,0 +1,7 @@
+---
+
+- name: ensure that user for application is present
+  user: name={{app.user}} comment="Application user" system=yes state=present groups=mail
+
+- name: create init script
+  template: src=service.j2 dest=/usr/lib/systemd/system/{{app.name}}.service owner=root group=root mode=0644

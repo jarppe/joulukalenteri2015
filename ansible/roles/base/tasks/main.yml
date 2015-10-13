@@ -1,0 +1,26 @@
+---
+
+- name: epel
+  yum: name=epel-release state=installed
+
+- name: Ensure that base packages are present
+  yum: name={{ item }} state=present
+  with_items:
+    - net-tools
+    - rsync
+    - vim
+    - ntp
+    - zsh
+    - wget
+    - ntp
+    - httpie
+
+- name: Disable DNS lookups for SSH
+  lineinfile: dest=/etc/ssh/sshd_config regexp='^UseDNS' line='UseDNS no' state=present
+  notify: reload ssh
+
+- name: disable requiretty on sudo
+  replace: dest=/etc/sudoers regexp="^Defaults\s+requiretty" replace="# Defaults requiretty"
+
+- name: NTP service
+  service: name=ntpd enabled=yes state=started

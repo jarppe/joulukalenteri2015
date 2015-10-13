@@ -1,0 +1,10 @@
+---
+
+- name: start firewalld
+  service: name=firewalld enabled=true state=started
+
+- name: add services
+  firewalld: service={{ item }} permanent=true state=enabled
+  with_items:
+    - http
+  notify: reload firewall

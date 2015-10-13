@@ -1,0 +1,24 @@
+---
+
+- name: Set up admin group
+  group: name=admin state=absent
+
+- name: Set up admin group
+  group: name=wheel state=present
+
+- name: Set up users
+  user: name={{item.name}} groups=wheel,users shell={{ item.shell | default("/bin/bash") }}
+  with_items: users
+
+- name: Set up authorized_keys
+  authorized_key: "user={{item.0.name}} key='{{ lookup('file', item.1) }}'"
+  with_subelements:
+    - users
+    - keys
+
+- name: Copy user preferences
+  copy: src={{item.name}} dest=/home owner={{item.name}} group={{item.name}}
+  with_items: users
+
+- name: Setup sudoers
+  copy: src=sudoers dest=/etc/sudoers.d/admin

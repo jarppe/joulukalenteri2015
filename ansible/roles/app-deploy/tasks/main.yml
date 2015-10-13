@@ -1,0 +1,14 @@
+---
+
+- name: copy app configuration file
+  template: src=config.edn.j2 dest={{app.home}}/config-local.edn owner={{app.user}}
+  notify:
+    - restart app
+
+- name: copy app binary
+  copy: src={{app.src}} dest={{app.home}}/{{app.dst}} owner={{app.user}}
+  notify:
+    - restart app
+
+- name: start service
+  service: name={{app.service}} enabled=yes state=started

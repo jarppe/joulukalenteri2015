@@ -1,0 +1,35 @@
+---
+
+- name: nginx user
+  user: name=nginx system=yes
+
+- name: nginx repo
+  copy: src=nginx.repo dest=/etc/yum.repos.d/nginx.repo owner=root group=root mode=0644
+
+- name: install
+  yum: name=nginx state=present update_cache=yes
+  notify: restart nginx
+
+- name: nginx running
+  service: name=nginx enabled=true state=started
+
+- name: remove default nginx files
+  file: name=/etc/nginx/conf.d state=absent
+  notify: restart nginx
+
+- name: create nginx directories
+  file: name=/etc/nginx/{{item}} state=directory
+  with_items: ['sites-enabled', 'includes']
+  notify: restart nginx
+
+- name: copy nginx confs
+  copy: src={{item}} dest=/etc/nginx/{{item}}
+  with_items:
+  - nginx.conf
+  - sites-enabled/no-default.conf
+  - includes/ssl.conf
+  - includes/ssl-stapling.conf
+  notify: restart nginx
+
+- name: /etc/ssl/private exists
+  file: dest=/etc/ssl/private state=directory owner=root group=root mode=0750

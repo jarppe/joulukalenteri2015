@@ -1,0 +1,10 @@
+---
+
+app_conf:
+  name: joulukalenteri
+  user: joulukalenteri
+  service: joulukalenteri
+  home: /home/joulukalenteri
+  src:  ../target/joulukalenteri.jar
+  dst:  server.jar
+  port: 3000

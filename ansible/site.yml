@@ -1,0 +1,14 @@
+---
+
+- hosts: webserver
+  vars_files:
+  - "vars/app.yml"
+  roles:
+    - base
+    - firewall
+    - users
+    - java
+    - nginx
+    - { role: app-base, app: "{{app_conf}}" }
+    - { role: app-deploy, app: "{{app_conf}}" }
+    - { role: site, name: "{{app_conf.name}}", http_port: 80, app_port: 3000 }
