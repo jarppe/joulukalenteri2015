@@ -16,7 +16,7 @@
     - httpie
 
 - name: Disable DNS lookups for SSH
-  lineinfile: dest=/etc/ssh/sshd_config regexp='^UseDNS' line='UseDNS no' state=present
+  lineinfile: dest=/etc/ssh/sshd_config regexp="^UseDNS" line="UseDNS no" state=present
   notify: reload ssh
 
 - name: disable requiretty on sudo
