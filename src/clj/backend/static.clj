@@ -34,11 +34,12 @@
           [:h2.text-center "Odota, Joulukalenteri latautuu..."]]]]
        (include-js (with-version "js/main.js"))])))
 
-(defroutes* static-routes'
+(defroutes* static-routes
   (GET* "/" []
     :no-doc true
     (-> (ok index-page)
-        (resp/content-type "text/html; charset=\"UTF-8\"")))
+        (resp/content-type "text/html; charset=\"UTF-8\"")
+        (cache/cache-control cache/no-cache)))
 
   (context* "/js" []
     (resources "" {:root "public/js"})
@@ -47,7 +48,3 @@
     (resources "" {:root "public/images"}))
   (context* "/css" []
     (resources "" {:root "css"})))
-
-(def static-routes
-  (-> static-routes'
-      (cache/wrap-cache {:value cache/cache-30d})))

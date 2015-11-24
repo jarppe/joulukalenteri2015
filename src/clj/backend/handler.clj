@@ -6,13 +6,11 @@
 
 (defapi app
   (swagger-ui "/api-docs")
-  (swagger-docs
-    :info {:title "API"})
-
+  (swagger-docs :info {:title "API"})
   static-routes)
 
 (defn create-handler [system context]
   (-> #'app
-      (cache/wrap-cache {:value    cache/no-cache
-                         :default? true})
-      (wrap-webjars)))
+      (wrap-webjars)
+      (cache/wrap-cache {:value    cache/cache-30d
+                         :default? true})))
