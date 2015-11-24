@@ -18,6 +18,39 @@
                               (subs 0 8)
                               (as-> hash (str "?_=" hash))))))
 
+(def meta-fields [["title" "og:title" "twitter:title"]
+                  "Millan Joulukalenteri 2015"
+
+                  ["description" "og:description" "twitter:description"]
+                  "Millan Joulukalenteri vuodelle 2015, avaa uusi luukku joka päivä. Jännää joulun odotusta"
+
+                  ["keywords"]
+                  "joulukalenteri,joulu"
+
+                  ["author"]
+                  "https://plus.google.com/+JarppeLänsiö"
+
+                  ["copyright"]
+                  "Copyrights Milla, Titta ja Jarppe Länsiö 2015"
+
+                  ["application-name"]
+                  "Millan Joulukalenteri"
+
+                  ["og:image" "twitter:image"]
+                  ""
+
+                  ["og:url" "twitter:url"]
+                  "http://millan-joulukalenteri.fi"
+
+                  ["og:type"]
+                  "website"
+
+                  ["og:locale"]
+                  "fi_FI"
+
+                  ["twitter:card"]
+                  "summary"])
+
 (def index-page
   (html
     (html5
@@ -28,6 +61,9 @@
        [:meta {:name "viewport" :content "width=device-width, initial-scale=1.0"}]
        [:link {:rel "icon" :type "image/x-icon" :href (with-version "/favicon.ico" "public")}]
        [:link {:rel "shortcut icon" :type "image/x-icon" :href (with-version "/favicon.ico" "public")}]
+       (for [[names content] (partition 2 meta-fields)
+             name names]
+         [:meta {:name name :content content}])
        (include-css (with-version "css/main.css"))]
       [:body
        [:div#app
