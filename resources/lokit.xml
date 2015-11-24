@@ -1,0 +1,3 @@
+<included>
+  <logger name="backend" level="INFO"/>
+</included>

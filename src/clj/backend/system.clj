@@ -1,18 +1,19 @@
 (ns backend.system
   (:require [com.stuartsierra.component :as component :refer [using]]
-            [maailma.core :refer [read-config!]]
-            [palikka.handler :refer [wrap-env]]
+            [maailma.core :as m]
+            [palikka.core :refer [providing]]
+            [palikka.handler :refer [wrap-env wrap-context]]
             [palikka.components.http-kit :as http-kit]
             [palikka.components.nrepl :as nrepl]
-            [backend.log :as log]
             [backend.handler :refer [create-handler]]))
 
 (defn new-system [override]
-  (log/init)
-  (let [config (read-config! "backend" override)
-        create-handler (fn [system]
-                         (-> (create-handler system)
-                             (wrap-env (select-keys config [:mode]))))]
+  (let [config (m/build-config
+                 (m/resource "config-defaults.edn")
+                 (m/file "./config-local.edn")
+                 override)
+        create-handler (partial create-handler config)]
     (component/map->SystemMap
-      (cond-> {:http    (-> (http-kit/create (:http config) create-handler))}
+      (cond-> {:http    (-> (http-kit/create (:http config) {:fn create-handler}))}
         (:nrepl config) (assoc :nrepl (nrepl/create (:nrepl config)))))))
+

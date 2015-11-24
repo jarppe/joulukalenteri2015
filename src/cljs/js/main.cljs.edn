@@ -1,2 +1,2 @@
 {:require [frontend.main]
- :init-fns [frontend.main/init!]}
+ :compiler-options {:asset-path "/js/main.out"}}

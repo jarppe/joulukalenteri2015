@@ -11,7 +11,7 @@
 
   static-routes)
 
-(defn create-handler [system]
+(defn create-handler [system context]
   (-> #'app
       (cache/wrap-cache {:value    cache/no-cache
                          :default? true})

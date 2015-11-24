@@ -4,6 +4,8 @@
             [reagent.ratom :refer-macros [reaction]]
             [frontend.app :as app]))
 
+(js/console.log "Here we go again...")
+
 (defn main-view []
   [:div.view.main-view
    [:h1 "Millan Joulukalenteri 2015"]
@@ -11,6 +13,5 @@
 
 (defn init! []
   (r/render [main-view] (js/document.getElementById "app")))
-
 
 (init!)

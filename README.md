@@ -32,9 +32,10 @@ ansible-playbook site.yml -i inventory/vagrant -u vagrant
 
 ## Artistic content
 
-All images Copyright © 2015 Milla Länsiö
+All images Copyright © 2015 Milla Länsiö and Titta Länsiö
 
-The "Joulukalenteri 2015" images by Milla Länsiö are licensed under a [Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International License](http://creativecommons.org/licenses/by-nc-sa/4.0/).
+The "Joulukalenteri 2015" images by Milla and Titta Länsiö are licensed
+under a [Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International License](http://creativecommons.org/licenses/by-nc-sa/4.0/).
 
 ## Code
 
