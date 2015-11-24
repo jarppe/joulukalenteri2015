@@ -1,5 +1,8 @@
 ---
 
+- name: Create nginx cache dir
+  file: path=/data/nginx/cache state=directory mode=0755 owner=nginx
+
 - name: Site | Copy application nginx configs
   template: src=site.conf.j2 dest=/etc/nginx/sites-enabled/{{name}}.conf
   notify:

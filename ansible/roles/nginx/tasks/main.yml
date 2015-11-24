@@ -7,11 +7,8 @@
   copy: src=nginx.repo dest=/etc/yum.repos.d/nginx.repo owner=root group=root mode=0644
 
 - name: install
-  yum: name=nginx state=present update_cache=yes
+  yum: name=nginx state=present
   notify: restart nginx
-
-- name: nginx running
-  service: name=nginx enabled=true state=started
 
 - name: remove default nginx files
   file: name=/etc/nginx/conf.d state=absent
@@ -33,3 +30,7 @@
 
 - name: /etc/ssl/private exists
   file: dest=/etc/ssl/private state=directory owner=root group=root mode=0750
+
+- name: nginx running
+  service: name=nginx enabled=true state=started
+
