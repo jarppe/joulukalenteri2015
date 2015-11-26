@@ -35,6 +35,7 @@
 
                   ; Front:
                   [org.clojure/clojurescript "1.7.170"]
+                  [alandipert/storage-atom "2.0.0-SNAPSHOT"]
                   [com.domkm/silk "0.1.1"]
                   [reagent "0.5.1"]
 

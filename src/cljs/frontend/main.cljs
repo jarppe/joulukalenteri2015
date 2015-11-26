@@ -2,7 +2,8 @@
   (:require-macros [cljs.core.async.macros :refer [go]])
   (:require [reagent.core :as r]
             [reagent.ratom :refer-macros [reaction]]
-            [frontend.app :as app]))
+            [frontend.app :as app]
+            [frontend.cal-view :refer [cal-view]]))
 
 (js/console.log "Here we go again...")
 
