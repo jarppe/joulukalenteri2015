@@ -18,6 +18,12 @@
                               (subs 0 8)
                               (as-> hash (str "?_=" hash))))))
 
+(def ga (str "(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){"
+             "(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),"
+             "m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)})"
+             "(window,document,'script','//www.google-analytics.com/analytics.js','ga');"
+             "ga('create','UA-57228234-1','auto');ga('send','pageview');"))
+
 (def meta-fields [["title" "og:title" "twitter:title"]
                   "Millan Joulukalenteri 2015"
 
@@ -72,7 +78,8 @@
           [:h2.text-center [:i.fa.fa-spinner.fa-spin]]]
          [:div.row
           [:h2.text-center "Odota, Joulukalenteri latautuu..."]]]]
-       (include-js (with-version "js/main.js"))])))
+       (include-js (with-version "js/main.js"))
+       [:script ga]])))
 
 (defroutes* static-routes
   (GET* "/" []
