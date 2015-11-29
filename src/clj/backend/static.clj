@@ -18,11 +18,15 @@
                               (subs 0 8)
                               (as-> hash (str "?_=" hash))))))
 
-(def ga (str "(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){"
-             "(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),"
-             "m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)})"
-             "(window,document,'script','//www.google-analytics.com/analytics.js','ga');"
-             "ga('create','UA-57228234-1','auto');ga('send','pageview');"))
+(def google-analytics
+  (str "(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){"
+       "(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),"
+       "m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)})"
+       "(window,document,'script','//www.google-analytics.com/analytics.js','ga');"
+       "ga('create','UA-57228234-1','auto');ga('send','pageview');"))
+
+(def google-fonts
+  "family=Merriweather:300italic|Molle:400italic&subset=latin-ext")
 
 (def meta-fields [["title" "og:title" "twitter:title"]
                   "Millan Joulukalenteri 2015"
@@ -67,19 +71,24 @@
        [:meta {:name "viewport" :content "width=device-width, initial-scale=1.0"}]
        [:link {:rel "icon" :type "image/x-icon" :href (with-version "/favicon.ico" "public")}]
        [:link {:rel "shortcut icon" :type "image/x-icon" :href (with-version "/favicon.ico" "public")}]
+       [:link {:href (str "https://fonts.googleapis.com/css?" google-fonts) :rel "stylesheet" :type "text/css"}]
        (for [[names content] (partition 2 meta-fields)
              name names]
          [:meta {:name name :content content}])
        (include-css (with-version "css/main.css"))]
       [:body
-       [:div#app
-        [:div.loading
-         [:div.row
-          [:h2.text-center [:i.fa.fa-spinner.fa-spin]]]
-         [:div.row
-          [:h2.text-center "Odota, Joulukalenteri latautuu..."]]]]
+       [:header
+        [:h1 "Millan Joulukalenteri 2015"]
+        [:h2 "Etsi luukkuja hiirellä. Voit avata tämän ja edellisten päivien luukkut hiiren painalluksella."]]
+       [:article
+        [:div#image-wrapper]
+        [:img#main-image {:src "img/cal.1280x905.jpg"}]]
+       [:footer
+        [:p "Taide Copyrights \u00A9 2015 Milla Länsiö and Titta Länsiö"]
+        [:p "Koodi Copyrights \u00A9 2015 Jarppe Länsiö"]]
+       [:img.preload {:src "img/rev.1280x905.jpg"}]
        (include-js (with-version "js/main.js"))
-       [:script ga]])))
+       [:script google-analytics]])))
 
 (defroutes* static-routes
   (GET* "/" []
@@ -97,7 +106,7 @@
   (context* "/js" []
     (resources "" {:root "public/js"})
     (resources "" {:root "js"}))
-  (context* "/images" []
-    (resources "" {:root "public/images"}))
+  (context* "/img" []
+    (resources "" {:root "public/img"}))
   (context* "/css" []
     (resources "" {:root "css"})))
