@@ -1,3 +1,10 @@
+@font-face {
+  font-family: "Molle";
+  font-style: italic;
+  font-weight: 400;
+  src: url(https://fonts.gstatic.com/s/molle/v4/L6RgGzlKavkYSdsgT-aeeQ.ttf) format("truetype");
+}
+
 * {
   padding:      0px;
   margin:       0px;
@@ -16,6 +23,9 @@ body {
   align-items:      center;
   justify-content:  start;
   padding-left:     10px;
+  font-family:      "Molle";
+  font-style:       italic;
+  font-weight:      400;
 }
 
 header {
@@ -25,24 +35,20 @@ header {
   justify-content:  start;
   padding:          2rem;
   h1 {
-    font-family:  "Molle", cursive;
     font-size:    3rem;
   }
   h2 {
     margin-top:   0.5rem;
     font-size:    1rem;
-    font-family:  "Merriweather", serif;
   }
 }
 
 h1.waiting {
   margin-top:   5rem;
-  font-family:  "Merriweather", serif;
   font-size:    4rem;
 }
 
 footer {
-  font-family: "Merriweather", serif;
   font-size: 0.7rem;
   padding: 1rem;
   p {
@@ -94,7 +100,6 @@ footer {
 .tooltip {
   position:     absolute;
   background:   white;
-  font-family:  "Merriweather", serif;
   font-size:    1rem;
   padding:      5px;
 }
