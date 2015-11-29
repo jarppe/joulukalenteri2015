@@ -71,7 +71,6 @@
        [:meta {:name "viewport" :content "width=device-width, initial-scale=1.0"}]
        [:link {:rel "icon" :type "image/x-icon" :href (with-version "/favicon.ico" "public")}]
        [:link {:rel "shortcut icon" :type "image/x-icon" :href (with-version "/favicon.ico" "public")}]
-       [:link {:href (str "https://fonts.googleapis.com/css?" google-fonts) :rel "stylesheet" :type "text/css"}]
        (for [[names content] (partition 2 meta-fields)
              name names]
          [:meta {:name name :content content}])
