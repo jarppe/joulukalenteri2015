@@ -57,7 +57,7 @@
                                   :width       (px w)
                                   :height      (px h)
                                   :line-height (px h)}
-                       :on-click (fn [_] (js/console.log "open" n) (swap! opened? not) nil)}
+                       :on-click (fn [_] (swap! opened? not) nil)}
    (if @opened?
      [:img {:style {:position "relative"
                     :left     (px (* x -1))
@@ -111,7 +111,8 @@
         [:img#main-image {:src "img/cal.1280x905.jpg"}]]
        [:footer
         [:p "Taide Copyrights \u00A9 2015 Milla Länsiö and Titta Länsiö"]
-        [:p "Koodi Copyrights \u00A9 2015 Jarppe Länsiö"]]])))
+        [:p [:a {:href "https://github.com/jarppe/joulukalenteri2015" :target "_blank"} "Koodi"]
+         " Copyrights \u00A9 2015 Jarppe Länsiö"]]])))
 
 (defn init! []
   (r/render [main-view] (js/document.getElementById "app")))
