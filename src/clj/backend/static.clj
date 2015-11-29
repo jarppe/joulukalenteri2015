@@ -77,15 +77,8 @@
          [:meta {:name name :content content}])
        (include-css (with-version "css/main.css"))]
       [:body
-       [:header
-        [:h1 "Millan Joulukalenteri 2015"]
-        [:h2 "Etsi luukkuja hiirellä. Voit avata tämän ja edellisten päivien luukkut hiiren painalluksella."]]
-       [:article
-        [:div#image-wrapper]
-        [:img#main-image {:src "img/cal.1280x905.jpg"}]]
-       [:footer
-        [:p "Taide Copyrights \u00A9 2015 Milla Länsiö and Titta Länsiö"]
-        [:p "Koodi Copyrights \u00A9 2015 Jarppe Länsiö"]]
+       [:div#app
+        [:h1.waiting "Odota, Millan Joulukalenteri latautuu..."]]
        [:img.preload {:src "img/rev.1280x905.jpg"}]
        (include-js (with-version "js/main.js"))
        [:script google-analytics]])))

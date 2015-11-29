@@ -11,6 +11,5 @@
 
 (defn create-handler [system context]
   (-> #'app
-      (wrap-webjars)
       (cache/wrap-cache {:value    cache/cache-30d
                          :default? true})))

@@ -35,13 +35,8 @@
 
                   ; Front:
                   [org.clojure/clojurescript "1.7.170"]
-                  [prismatic/dommy "1.1.0"]
+                  [reagent "0.5.1"]
                   [alandipert/storage-atom "2.0.0-SNAPSHOT"]
-
-                  ; Assets:
-                  [org.webjars.bower/bootstrap "3.3.5" :exclusions [org.webjars.bower/jquery]]
-                  [org.webjars.bower/bootswatch "3.3.5" :exclusions [org.webjars.bower/bootstrap]]
-                  [org.webjars.bower/font-awesome "4.5.0"]
 
                   ; Workflow:
                   [reloaded.repl "0.2.1"]
