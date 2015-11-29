@@ -5,7 +5,7 @@
             [alandipert.storage-atom :refer [local-storage]]
             [frontend.hatch-pos :refer [hatch-positions]]))
 
-(def debug? true)
+(def debug? false)
 
 (def revealed-img "img/rev.1280x905.jpg")
 (defn px [v] (str v "px"))

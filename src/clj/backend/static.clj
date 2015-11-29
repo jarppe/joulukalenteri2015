@@ -77,10 +77,9 @@
          [:meta {:name name :content content}])
        (include-css (with-version "css/main.css"))]
       [:body
-       [:div#app
-        [:h1.waiting "Odota, Millan Joulukalenteri latautuu..."]]
-       [:img.preload {:src "img/rev.1280x905.jpg"}]
-       (include-js (with-version "js/main.js"))
+       [:div#coming-soon
+        [:h1 "Millan Joulukalenteri 2015"]
+        [:h2 "Tulossa pian..."]]
        [:script google-analytics]])))
 
 (defroutes* static-routes
