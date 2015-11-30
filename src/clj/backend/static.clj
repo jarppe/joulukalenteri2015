@@ -94,16 +94,17 @@
 (defn get-pref-lang [accept-language]
   (->> (or accept-language default-lang)
        (str/lower-case)
-       (re-seq #"([^;]+)\s*;\s*q\s*=\s*(\d*(?:\.\d*)?)\s*(?:,)?" )
-       (mapcat (fn [[_ langs q]]
-                 (map (fn [lang]
-                        [(str/replace lang #"\-.*" "") q])
-                      (str/split langs #","))))
+       (re-seq #"([^,]+)(?:,)?")
+       (map (comp str/trim second))
+       (map (fn [v]
+              (let [[_ lang q] (re-matches #"([^;\s]+)\s*(?:;\s*q\s*=\s*(\d+(\.\d*)?))?" v)]
+                [(str/replace lang #"\-.*" "") (Double/parseDouble (or q "1.0"))])))
+       (filter (fn [[lang :as v]]
+                 (if (supported-langs lang) v)))
        (reduce (fn [[_ best-q :as best] [lang q]]
-                 (let [q (Double/parseDouble q)]
-                   (if (and (supported-langs lang) (> q best-q))
-                     [lang q]
-                     best)))
+                 (if (> q best-q)
+                   [lang q]
+                   best))
                [default-lang 0.0])
        (first)))
 
@@ -121,7 +122,6 @@
         (ok)
         (resp/content-type "image/x-icon")))
   (GET* "/loc.js" request
-    (println "LANG:" (get-in request [:headers "accept-language"]))
     (-> request
         (get-in [:headers "accept-language"])
         (get-pref-lang)

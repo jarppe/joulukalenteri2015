@@ -3,9 +3,12 @@
   (:require [cljs.core.async :refer [<!] :as a]
             [reagent.core :as r]
             [alandipert.storage-atom :refer [local-storage]]
-            [frontend.hatch-pos :refer [hatch-positions]]))
+            [frontend.hatch-pos :refer [hatch-positions]]
+            [frontend.loc :as loc]))
 
 (def debug? false)
+
+(def terms (loc/terms js/window.lang))
 
 (def revealed-img "img/r.jpeg")
 (defn px [v] (str v "px"))
@@ -32,23 +35,10 @@
        (concat (repeat active-hatches true)
                (repeat false))))
 
-(def numbers-in-fi {3  "kolme"
-                    4  "neljä"
-                    5  "viisi"
-                    6  "kuusi"
-                    7  "seitsemän"
-                    8  "kahdeksan"
-                    9  "yhdeksän"
-                    10 "kymmenen"
-                    11 "yksitoista"
-                    12 "kaksitoista"})
-
 (defn make-tooltip-message [n]
   (let [days-until (- n active-hatches)]
-    (case days-until
-      1 "Tämän luukun voit avata jo huomenna"
-      2 "Enää kaksi yötä niin saat avata tämän luukun"
-      (str "Vielä " (numbers-in-fi days-until (str days-until)) " yötä tähän luukkuun"))))
+    (or (get-in terms [:until days-until])
+        ((terms :until-more) days-until))))
 
 (defn active-hatch-component [{:keys [n x y w h]} opened?]
   [:div.hatch.allowed {:class    (if @opened? "opened" "closed")
@@ -102,17 +92,19 @@
     (fn []
       [:div#app
        [:header
-        [:h1 "Millan Joulukalenteri 2015"]
-        [:h2 "Etsi luukkuja hiirellä. Voit avata tämän ja edellisten päivien luukkut hiiren painalluksella."]]
+        [:h1 (terms :title)]
+        [:h2 (terms :help)]]
        [:article
         [:div#image-wrapper
          (for [{n :n :as hatch} (make-hatches)]
            ^{:key n} [hatch-component hatch (r/cursor opened [n])])]
         [:img#main-image {:src "img/k.jpeg"}]]
        [:footer
-        [:p "Taide Copyrights \u00A9 2013 Milla Länsiö"]
-        [:p [:a {:href "https://github.com/jarppe/joulukalenteri2015" :target "_blank"} "Koodi"]
-         " Copyrights \u00A9 2015 Jarppe Länsiö"]]])))
+        [:p (terms :art-copy)]
+        [:p
+         [:a {:href "https://github.com/jarppe/joulukalenteri2015" :target "_blank"} (terms :code)]
+         " "
+         (terms :code-copy)]]])))
 
 (defn init! []
   (r/render [main-view] (js/document.getElementById "app")))
