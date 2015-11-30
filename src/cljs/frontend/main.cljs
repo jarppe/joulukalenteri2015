@@ -22,10 +22,10 @@
 (defn make-hatches []
   (map (fn [{:keys [x y x2 y2]} n can-open?]
          {:n         n
-          :x         x
-          :y         y
-          :w         (- x2 x)
-          :h         (- y2 y)
+          :x         (- x 4)
+          :y         (- y 6)
+          :w         (- x2 x 4)
+          :h         (- y2 y 6)
           :can-open? can-open?})
        hatch-positions
        (range 1 25)
@@ -100,7 +100,7 @@
 (defn main-view []
   (let [opened (local-storage (r/atom {}) :opened-2015)]
     (fn []
-      [:div
+      [:div#app
        [:header
         [:h1 "Millan Joulukalenteri 2015"]
         [:h2 "Etsi luukkuja hiirellä. Voit avata tämän ja edellisten päivien luukkut hiiren painalluksella."]]
@@ -110,7 +110,7 @@
            ^{:key n} [hatch-component hatch (r/cursor opened [n])])]
         [:img#main-image {:src "img/k.jpeg"}]]
        [:footer
-        [:p "Taide Copyrights \u00A9 2015 Milla Länsiö (kuva vuodelta 2012)"]
+        [:p "Taide Copyrights \u00A9 2013 Milla Länsiö"]
         [:p [:a {:href "https://github.com/jarppe/joulukalenteri2015" :target "_blank"} "Koodi"]
          " Copyrights \u00A9 2015 Jarppe Länsiö"]]])))
 
