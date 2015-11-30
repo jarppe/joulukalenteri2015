@@ -7,12 +7,12 @@
 
 (def debug? true)
 
-(def revealed-img "img/r.jpg")
+(def revealed-img "img/r.jpeg")
 (defn px [v] (str v "px"))
 
 (def active-hatches
   (if debug?
-    12
+    24
     (let [now (js/Date.)]
       (cond
         (> (.getYear now) 115) 24
@@ -108,9 +108,9 @@
         [:div#image-wrapper
          (for [{n :n :as hatch} (make-hatches)]
            ^{:key n} [hatch-component hatch (r/cursor opened [n])])]
-        [:img#main-image {:src "img/k.jpg"}]]
+        [:img#main-image {:src "img/k.jpeg"}]]
        [:footer
-        [:p "Taide Copyrights \u00A9 2015 Milla Länsiö and Titta Länsiö"]
+        [:p "Taide Copyrights \u00A9 2015 Milla Länsiö (kuva vuodelta 2012)"]
         [:p [:a {:href "https://github.com/jarppe/joulukalenteri2015" :target "_blank"} "Koodi"]
          " Copyrights \u00A9 2015 Jarppe Länsiö"]]])))
 
