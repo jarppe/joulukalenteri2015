@@ -78,7 +78,8 @@
       [:body
        [:div#app
         [:h1.waiting "Odota, Millan Joulukalenteri latautuu..."]]
-       [:img.preload {:src "img/rev.1280x905.jpg"}]
+       [:img.preload {:src "img/k.jpg"}]
+       [:img.preload {:src "img/r.jpg"}]
        (include-js (with-version "js/main.js"))
        [:script google-analytics]])))
 

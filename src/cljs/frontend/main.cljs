@@ -7,7 +7,7 @@
 
 (def debug? true)
 
-(def revealed-img "img/rev.1280x905.jpg")
+(def revealed-img "img/r.jpg")
 (defn px [v] (str v "px"))
 
 (def active-hatches
@@ -108,7 +108,7 @@
         [:div#image-wrapper
          (for [{n :n :as hatch} (make-hatches)]
            ^{:key n} [hatch-component hatch (r/cursor opened [n])])]
-        [:img#main-image {:src "img/cal.1280x905.jpg"}]]
+        [:img#main-image {:src "img/k.jpg"}]]
        [:footer
         [:p "Taide Copyrights \u00A9 2015 Milla Länsiö and Titta Länsiö"]
         [:p [:a {:href "https://github.com/jarppe/joulukalenteri2015" :target "_blank"} "Koodi"]
