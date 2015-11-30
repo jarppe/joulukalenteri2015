@@ -1,10 +1,12 @@
 (ns backend.static
   (:require [clojure.java.io :as io]
+            [clojure.string :as str]
             [compojure.api.sweet :refer :all]
             [compojure.route :refer [resources]]
             [hiccup.core :refer [html]]
             [hiccup.page :refer [html5 include-css include-js]]
-            [ring.util.http-response :as resp :refer [ok]]
+            [ring.util.http-response :refer [ok]]
+            [ring.util.response :as resp]
             [backend.cache :as cache])
   (:import (org.apache.commons.codec.digest DigestUtils)))
 
@@ -80,8 +82,30 @@
         [:h1.waiting "Odota, Millan Joulukalenteri latautuu..."]]
        [:img.preload {:src "img/k.jpeg"}]
        [:img.preload {:src "img/r.jpeg"}]
+       (include-js "/loc.js")
        (include-js (with-version "js/main.js"))
        [:script google-analytics]])))
+
+(def default-lang "en")
+(def supported-langs #{"fi" "en"})
+
+; Resolve preferred lang from Accept-Language header, like "en-US,en;q=0.8,fi;q=0.6"
+
+(defn get-pref-lang [accept-language]
+  (->> (or accept-language default-lang)
+       (str/lower-case)
+       (re-seq #"([^;]+)\s*;\s*q\s*=\s*(\d*(?:\.\d*)?)\s*(?:,)?" )
+       (mapcat (fn [[_ langs q]]
+                 (map (fn [lang]
+                        [(str/replace lang #"\-.*" "") q])
+                      (str/split langs #","))))
+       (reduce (fn [[_ best-q :as best] [lang q]]
+                 (let [q (Double/parseDouble q)]
+                   (if (and (supported-langs lang) (> q best-q))
+                     [lang q]
+                     best)))
+               [default-lang 0.0])
+       (first)))
 
 (defroutes* static-routes
   (GET* "/" []
@@ -96,6 +120,15 @@
         (io/input-stream)
         (ok)
         (resp/content-type "image/x-icon")))
+  (GET* "/loc.js" request
+    (println "LANG:" (get-in request [:headers "accept-language"]))
+    (-> request
+        (get-in [:headers "accept-language"])
+        (get-pref-lang)
+        (as-> lang (format "window.lang = \"%s\";\n" lang))
+        (ok)
+        (resp/content-type "text/javascript")
+        (resp/header "Vary" "Accept-Language")))
   (context* "/js" []
     (resources "" {:root "public/js"})
     (resources "" {:root "js"}))
