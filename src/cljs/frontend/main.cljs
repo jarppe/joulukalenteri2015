@@ -81,9 +81,6 @@
     [inactive-hatch-component lang  hatch]))
 
 (defn flag [flag-lang lang]
-  (js/console.log "F:" flag-lang)
-  (js/console.log "L:" @lang)
-  (js/console.log "A:" (if (= flag-lang @lang) "active"))
   [:a {:on-click (fn [_] (reset! lang flag-lang))}
    [:img {:src (str "/img/" flag-lang ".png")
           :class (if (= flag-lang @lang) "active")}]])
