@@ -34,7 +34,7 @@
     (or (get-in terms [:until days-until])
         ((terms :until-more) days-until))))
 
-(defn active-hatch-component [terms {:keys [n x y w h]} opened?]
+(defn active-hatch-component [{:keys [n x y w h]} opened?]
   [:div.hatch.allowed {:class    (if @opened? "opened" "closed")
                        :style    {:left        (px x)
                                   :top         (px y)
@@ -48,9 +48,8 @@
                     :top      (px (* y -1))}
             :src   revealed-img}])])
 
-(defn inactive-hatch-component [terms {:keys [n x y w h]}]
-  (let [tooltip-message (make-tooltip-message terms n)
-        tooltip? (r/atom false)
+(defn inactive-hatch-component [lang {:keys [n x y w h]}]
+  (let [tooltip? (r/atom false)
         tooltip! (fn [v] (reset! tooltip? v))
         tooltip-task (atom nil)
         mouse-enter (fn [_]
@@ -74,12 +73,12 @@
        (if @tooltip?
          [:div.tooltip {:style {:left (px x)
                                 :top  (px (+ y h 10))}}
-          [:p tooltip-message]])])))
+          [:p (make-tooltip-message (loc/terms @lang) n)]])])))
 
-(defn hatch-component [terms {:keys [can-open?] :as hatch} opened?]
+(defn hatch-component [lang {:keys [can-open?] :as hatch} opened?]
   (if can-open?
-    [active-hatch-component terms hatch opened?]
-    [inactive-hatch-component terms hatch]))
+    [active-hatch-component hatch opened?]
+    [inactive-hatch-component lang  hatch]))
 
 (defn flag [flag-lang lang]
   (js/console.log "F:" flag-lang)
@@ -104,7 +103,7 @@
          [:article
           [:div#image-wrapper
            (for [{n :n :as hatch} (make-hatches)]
-             ^{:key n} [hatch-component terms hatch (r/cursor opened [n])])]
+             ^{:key n} [hatch-component lang hatch (r/cursor opened [n])])]
           [:img#main-image {:src "img/k.jpeg"}]]
          [:footer
           [:p (terms :art-copy)]
