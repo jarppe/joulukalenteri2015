@@ -76,7 +76,7 @@
       (swap! x (fn [x]
                  (if x
                    x
-                   (do (backend.main/setup-app! {:port port})
+                   (do (backend.main/setup-app! {:http {:port port}})
                        (go)))))
       fileset)))
 
@@ -91,7 +91,6 @@
       (cljs-repl)
       (cljs :optimizations :none)
       (start-app :port port)))
-
 
 (deftask copy-jar
   "Copy über-jar under ansible"
