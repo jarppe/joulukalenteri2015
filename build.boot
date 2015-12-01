@@ -76,7 +76,7 @@
       (swap! x (fn [x]
                  (if x
                    x
-                   (do (backend.main/setup-app! {:http {:port port}})
+                   (do (backend.main/setup-app! {:http {:port (or port 4000)}})
                        (go)))))
       fileset)))
 
