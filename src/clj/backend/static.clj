@@ -51,7 +51,7 @@
                   "Millan Joulukalenteri"
 
                   ["og:image" "twitter:image"]
-                  ""
+                  "http://millan-joulukalenteri.fi/img/k.jpeg"
 
                   ["og:url" "twitter:url"]
                   "http://millan-joulukalenteri.fi"
