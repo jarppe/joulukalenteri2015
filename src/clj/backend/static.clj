@@ -77,7 +77,7 @@
        [:link {:rel "shortcut icon" :type "image/x-icon" :href (with-version "/favicon.ico" "public")}]
        (for [[names content] (partition 2 meta-fields)
              name names]
-         [:meta {:name name :content content}])
+         [:meta {:property name :content content}])
        (include-css (with-version "css/main.css"))]
       [:body
        [:div#app
